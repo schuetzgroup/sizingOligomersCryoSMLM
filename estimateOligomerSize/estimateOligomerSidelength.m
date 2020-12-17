@@ -1,4 +1,4 @@
-function [sidelength,radius] = estimateOligomerSidelength(locs,oligomerDegree,analysisMethod)
+function [sidelength,radius] = estimateOligomerSidelength(locs,oligomerDegree)
 %  estimateOligomerSidelength
 %  INPUT:
 %         - locs: Table of localizations from oligomer particles.
@@ -15,9 +15,6 @@ function [sidelength,radius] = estimateOligomerSidelength(locs,oligomerDegree,an
 %
 %         - oligomerDegree: oligomeriation degree (i.e. number of protomers
 %                           constituting an oligomer)
-%
-%         - analysisMethod: method one or method two as explained in the
-%                           corresponding publication
 %
 %  OUTPUT:
 %          - sidelength:    estimated sidelength of oligomer structure
@@ -86,16 +83,10 @@ radii(radii>rmax) = NaN;
 
 %% Calculate corrected radii
 
-switch analysisMethod
-    case 'one'
-        rhalf = radii./2;
-        hasRealSolution = (rhalf.^2 > sum_var); % check that solution is not imaginary
-        radii = rhalf + sqrt(rhalf.^2 - sum_var); % subtracting computed bias from estimation
-        radii(~hasRealSolution) = NaN;
-    case 'two'
-        overallRadius_uncorr = nanmedian(radii);
-        radii = radii - sum_var./overallRadius_uncorr;
-end
+rhalf = radii./2;
+hasRealSolution = (rhalf.^2 > sum_var); % check that solution is not imaginary
+radii = rhalf + sqrt(rhalf.^2 - sum_var); % subtracting computed bias from estimation
+radii(~hasRealSolution) = NaN;
 
 
 %% Calculate overall estimation for radius and side length
