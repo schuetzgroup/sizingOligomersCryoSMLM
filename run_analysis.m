@@ -5,7 +5,7 @@
 % 'A workflow for sizing oligomeric biomolecules based on cryo single
 % molecule localization microscopy'
 % Magdalena C. Schneider, Roger Telschow, Gwenael Mercier, Montserrat
-% Lopez-Martinez, Otmar Scherzer, and Gerhard J. Schütz
+% Lopez-Martinez, Otmar Scherzer, and Gerhard J. SchÃ¼tz
 % Affiliations:
 % TU Wien, Vienna, Austria
 % University of Vienna, Vienna, Austria
@@ -37,14 +37,13 @@ addpath(genpath(folder));
 
 
 %% Set input parameters
-analysisMethod = 'one'; % either 'one' or 'two'
-                        % (see manuscript for more information on methods)
 
 oligomerDegree = 4;
+
+% Specify input file (.mat or .csv)
 fileOligomerData = 'testdata/simulatedOligomers_1000particles_1e5photons.mat';
-%fileOligomerData = 'testdata/simulatedOligomers.csv';
 [~,~,fileExtension] = fileparts(fileOligomerData);
- 
+
 switch fileExtension
      case '.mat'
          load(fileOligomerData);
@@ -72,7 +71,7 @@ end
 %% Run analysis
 disp('Running analysis...')
 
-[sidelength,radius] = estimateOligomerSidelength( locs,oligomerDegree,analysisMethod );
+[sidelength,radius] = estimateOligomerSidelength( locs,oligomerDegree );
 
 
 %% Display results
